@@ -28,6 +28,20 @@ def init_db():
         )       
     """)
     
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS expenses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            description TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            date TEXT NOT NULL,
+            category TEXT NOT NULL,
+            user_id INTEGER,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    """)
+    
+    
     # Save changes to the database
     connection.commit()
     
@@ -85,6 +99,33 @@ def register():
         "success": True,
         "message": "User record updated!"
     }), 201  # 201 = created
+    
+# ------------------ EXPENSES -----------------
+@app.post('/api/expenses')
+def create_expense():
+    new_expense = request.get_json()
+    print(new_expense)
+    
+    title = new_expense["title"]
+    description = new_expense["description"]
+    amount = new_expense["amount"]
+    date = new_expense["date"]
+    category = new_expense["category"]
+    user_id = new_expense["user_id"]
+    
+    connection = sqlite3.connect(DB_NAME)
+    cursor = connection.cursor()
+    cursor.execute("""
+        INSERT INTO expenses (title, description, amount, date, category, user_id)
+        VALUES (?, ?, ?, ?, ?, ?)""", (title, description, amount, date, category, user_id))
+    connection.commit()
+    connection.close()
+    
+    
+    return jsonify({
+        "success": True,
+        "message": "Expense created successfully"
+    }), 201
 
 
 # ------------------ RUN APP ------------------
