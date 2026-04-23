@@ -1,4 +1,4 @@
-Ensure your usind CMD in terminal
+Ensure your using CMD in terminal
 
 
 ----- Create a venv -----
