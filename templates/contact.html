@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contact Page
+{% endblock title %}
+
+{% block content %}
+<h1 class="text-center mt-5">Contact Us for Any Questions</h1>
+<div class="card contact-card m-5 p-5 fw-bolder text-center bg-dark-subtle fs-4">
+    <p>email: {{details["email"]}} </p>
+    <p>phone: {{details["phone"]}} </p>
+    <p>facebook: {{details["facebook"]}} </p>
+    <p>instagram: {{details["instagram"]}} </p>  
+</div>
+
+{% endblock content %}

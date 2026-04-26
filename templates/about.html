@@ -1,0 +1,15 @@
+    {% extends 'base.html' %}
+
+    {% block title %}
+    About Page
+    {% endblock title %}
+
+    {% block content %}
+    <h1 class="text-center mt-5">About The Page</h1>
+    <div class="card contact-card m-5 p-5 fw-bolder text-center bg-dark-subtle fs-4">
+        <p> name: {{data["name"]}}</p>
+        <p> cohort: {{data["cohort"]}}</p>
+        <p> year: {{data["year"]}} </p>  
+    </div>
+    
+    {% endblock content %}

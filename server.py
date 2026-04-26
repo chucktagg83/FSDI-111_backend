@@ -1,5 +1,5 @@
 # Import tools from Flask
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 # Import SQLite (built-in database)
 import sqlite3
@@ -180,6 +180,7 @@ def get_expenses(user_id):  # Function receives user_id from URL
     cursor.execute("SELECT * FROM expenses WHERE user_id=?", (user_id,))  # Get expenses for specific user
     rows = cursor.fetchall()  # Fetch all matching rows (list of results)
     
+    #---Validation
     if not rows:  # Check if no expenses found
         connection.close()  # Close connection before returning
         return jsonify({
@@ -325,8 +326,36 @@ def delete_expense(expense_id):  # Function receives expense_id
         "message": "Expense deleted successfully"  # Fixed message (was "User")
     }), 200
 
+#-------------------- FRONT END ----------------------------------
+#http://127.0.0.1.5000/home
+@app.get('/')
+@app.get('/home')
+@app.get('/index')
+def home():
+    # Logic Here
+    my_name = "Chuck T"
+    return render_template("index.html", name=my_name)
 
+# about.html should render <h1>about page<h1>
+@app.get('/about')
+def about():
+    my_data = {
+        "name": "Chuck",
+        "cohort": "CH 65",
+        "year": 2026
+        } 
+    return render_template("about.html", data=my_data)
 
+# about.html should render <h1>about page</h1>
+@app.get('/contact')
+def contact():
+    contact_data = {
+        "email": "chuckt@gmai.com",
+        "phone": "(804) 948-3489",
+        "facebook": "chuckt@facebook.com",
+        "instagram": "chuckt@instagram.com"
+    }
+    return render_template("contact.html", details=contact_data)
 # ------------------ RUN APP ------------------
 
 # This ensures the app runs only when this file is executed directly
